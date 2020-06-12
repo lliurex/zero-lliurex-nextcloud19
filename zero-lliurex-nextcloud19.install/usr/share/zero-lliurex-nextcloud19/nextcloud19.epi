@@ -1,0 +1,6 @@
+{
+	"type":"apt",
+	"pkg_list": [{"name":"nextcloud19","key_store":"zero-lliurex-nextcloud"}], 
+	"script": {"name":"/usr/share/zero-lliurex-nextcloud19/nextcloud19_script"},
+	"zomando":"zero-lliurex-nextcloud19"
+	}

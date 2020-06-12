@@ -1,0 +1,59 @@
+#!/bin/bash
+
+
+ACTION="$1"
+CUSTOM_VERSION="/usr/share/zero-lliurex-nextcloud19/custom_version.php"
+ORIG_VERSION="/var/www/nextcloud/version.php"
+ORIG_VERSION_BAK="/var/www/nextcloud/version_BAK.php"
+BACKUP_DIR="/var/www/nextcloud/backup_next15/"
+CONFIG_DIR="/var/www/nextcloud/config/"
+DATA_DIR="/var/www/nextcloud/data/"
+
+
+case $ACTION in
+
+	preInstall)
+	
+		echo "Creating backup of current installation..."
+
+		if [ -d ${DATA} ];then
+			if ! [ -d ${BACKUP_DIR} ];then
+				mkdir ${BACKUP_DIR}
+			fi
+
+			if ! [ -d ${BACKUP_DIR}"/data" ];then
+				cp -r ${CONFIG_DIR} ${BACKUP_DIR}
+				cp -r ${DATA_DIR} ${BACKUP_DIR}
+				mysqldump -uroot -p$(mysql_root_passwd -g) -e nextcloud > ${BACKUP_DIR}nextcloud15-dump.sql
+			fi
+		fi	
+	
+	;;
+
+	postInstall)
+
+		echo "Preparing update..."
+		cd /var/www/nextcloud/
+		mv $ORIG_VERSION $ORIG_VERSION_BAK
+		cp $CUSTOM_VERSION $ORIG_VERSION
+
+		echo "Upgrading to nextcloud19...."
+		cd /var/www/nextcloud
+		sudo -u www-data php occ upgrade
+
+		echo "Fixing database..."
+		sudo -u www-data php occ db:add-missing-indices
+		sudo -u www-data php occ db:add-missing-columns
+		sudo -u www-data php occ db:convert-filecache-bigint --no-interaction
+
+		echo "Finishing the update..."
+		cd /var/www/nextcloud
+		mv $ORIG_VERSION_BAK $ORIG_VERSION
+		systemctl restart apache2.service
+		
+	;;
+
+	
+		
+esac
+exit 0
