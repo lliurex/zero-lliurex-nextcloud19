@@ -15,7 +15,7 @@ case $ACTION in
 	preInstall)
 	
 		echo "Creating backup of current installation..."
-
+				
 		if [ -d ${DATA} ];then
 			if ! [ -d ${BACKUP_DIR} ];then
 				mkdir ${BACKUP_DIR}
@@ -24,7 +24,9 @@ case $ACTION in
 			if ! [ -d ${BACKUP_DIR}"/data" ];then
 				cp -r ${CONFIG_DIR} ${BACKUP_DIR}
 				cp -r ${DATA_DIR} ${BACKUP_DIR}
-				mysqldump -uroot -p$(mysql_root_passwd -g) -e nextcloud > ${BACKUP_DIR}nextcloud15-dump.sql
+				cd /var/www/nextcloud/
+				dbname=$(sudo -u www-data php occ config:system:get dbname |tail -n 1)
+				mysqldump -uroot -p$(mysql_root_passwd -g) -e $dbname > ${BACKUP_DIR}nextcloud-dump.sql
 			fi
 		fi	
 	
@@ -49,6 +51,9 @@ case $ACTION in
 		echo "Finishing the update..."
 		cd /var/www/nextcloud
 		mv $ORIG_VERSION_BAK $ORIG_VERSION
+		dbname=$(sudo -u www-data php occ config:system:get dbname |tail -n 1)
+		mysql -uroot -p$(mysql_root_passwd -g) -e 'Update nextcloud.oc_appconfig set configvalue="[]" where configkey="oc.integritycheck.checker" and configvalue like "%backup_next15%"' $dbname
+		
 		systemctl restart apache2.service
 		
 	;;
