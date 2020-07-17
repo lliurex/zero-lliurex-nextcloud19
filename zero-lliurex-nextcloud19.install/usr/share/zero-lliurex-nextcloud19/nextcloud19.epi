@@ -3,5 +3,5 @@
 	"pkg_list": [{"name":"nextcloud19","key_store":"zero-lliurex-nextcloud","custom_icon":"lliurex-nextcloud-setup.png"}], 
 	"script": {"name":"/usr/share/zero-lliurex-nextcloud19/nextcloud19_script"},
 	"custom_icon_path":"/usr/share/icons/hicolor/64x64/apps/",
-	"zomando":"zero-lliurex-nextcloud19",
+	"zomando":"zero-lliurex-nextcloud19"
 	}
