@@ -14,48 +14,55 @@ case $ACTION in
 
 	preInstall)
 	
-		echo "Creating backup of current installation..."
 				
 		if [ -d ${DATA} ];then
-			if ! [ -d ${BACKUP_DIR} ];then
-				mkdir ${BACKUP_DIR}
-			fi
+			if [ -f ${CONFIG_DIR}"config.php" ]; then
+				echo "Creating backup of current installation..."
 
-			if ! [ -d ${BACKUP_DIR}"/data" ];then
-				cp -r ${CONFIG_DIR} ${BACKUP_DIR}
-				cp -r ${DATA_DIR} ${BACKUP_DIR}
-				cd /var/www/nextcloud/
-				dbname=$(sudo -u www-data php occ config:system:get dbname |tail -n 1)
-				mysqldump -uroot -p$(mysql_root_passwd -g) -e $dbname > ${BACKUP_DIR}nextcloud-dump.sql
-			fi
+				if ! [ -d ${BACKUP_DIR} ];then
+					mkdir ${BACKUP_DIR}
+				fi
+
+				if ! [ -d ${BACKUP_DIR}"/data" ];then
+					cp -r ${CONFIG_DIR} ${BACKUP_DIR}
+					cp -r ${DATA_DIR} ${BACKUP_DIR}
+					cd /var/www/nextcloud/
+					dbname=$(sudo -u www-data php occ config:system:get dbname |tail -n 1)
+					mysqldump -uroot -p$(mysql_root_passwd -g) -e $dbname > ${BACKUP_DIR}nextcloud-dump.sql
+				fi
+			fi	
 		fi	
 	
 	;;
 
 	postInstall)
 
-		echo "Preparing update..."
-		cd /var/www/nextcloud/
-		mv $ORIG_VERSION $ORIG_VERSION_BAK
-		cp $CUSTOM_VERSION $ORIG_VERSION
+		if [ -f ${CONFIG_DIR}"config.php" ]; then
+			echo "Preparing update..."
+			cd /var/www/nextcloud/
+			mv $ORIG_VERSION $ORIG_VERSION_BAK
+			cp $CUSTOM_VERSION $ORIG_VERSION
 
-		echo "Upgrading to nextcloud19...."
-		cd /var/www/nextcloud
-		sudo -u www-data php occ upgrade
+			echo "Upgrading to nextcloud19...."
+			cd /var/www/nextcloud
+			sudo -u www-data php occ upgrade
 
-		echo "Fixing database..."
-		sudo -u www-data php occ db:add-missing-indices
-		sudo -u www-data php occ db:add-missing-columns
-		sudo -u www-data php occ db:convert-filecache-bigint --no-interaction
+			echo "Fixing database..."
+			sudo -u www-data php occ db:add-missing-indices
+			sudo -u www-data php occ db:add-missing-columns
+			sudo -u www-data php occ db:convert-filecache-bigint --no-interaction
 
-		echo "Finishing the update..."
-		cd /var/www/nextcloud
-		mv $ORIG_VERSION_BAK $ORIG_VERSION
-		dbname=$(sudo -u www-data php occ config:system:get dbname |tail -n 1)
-		mysql -uroot -p$(mysql_root_passwd -g) -e 'Update nextcloud.oc_appconfig set configvalue="[]" where configkey="oc.integritycheck.checker" and configvalue like "%backup_next15%"' $dbname
-		
-		systemctl restart apache2.service
-		
+			echo "Finishing the update..."
+			cd /var/www/nextcloud
+			mv $ORIG_VERSION_BAK $ORIG_VERSION
+			
+			
+			dbname=$(sudo -u www-data php occ config:system:get dbname |tail -n 1)
+			mysql -uroot -p$(mysql_root_passwd -g) -e 'Update nextcloud.oc_appconfig set configvalue="[]" where configkey="oc.integritycheck.checker" and configvalue like "%backup_next15%"' $dbname
+			
+			
+			systemctl restart apache2.service
+		fi
 		echo "***Installation finished***"
 		
 	;;
