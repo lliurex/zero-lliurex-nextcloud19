@@ -1,48 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-<id>zero-lliurex-stellarium_zmd</id>
+<id>zero-lliurex-nextcloud19_zmd</id>
 <metadata_license>CC0-1.0</metadata_license>
-<name>lliurex-zero-installer-stellarium</name>
-<name xml:lang="es">Instalación de Stellarium</name>
-<name xml:lang="qcv">Instal·lació del Stellarium</name>
-<name xml:lang="ca_ES">Instal·lació del Stellarium</name>
-<summary>=Stellarium installation wizard, an desktop planetarium</summary>
-<summary xml:lang="es">Asistente de instalación del Stellarium, un planetario de escritorio</summary>
-<summary xml:lang="qcv">=Auxiliar d'instal·lació del Stellarium,un planetari d'escriptori</summary>
-<summary xml:lang="ca_ES">=Auxiliar d'instal·lació del Stellarium,un planetari d'escriptori</summary>
+<name>lliurex-zero-installer-nextcloud19</name>
+<name xml:lang="es">Instalación de nextcloud</name>
+<name xml:lang="ca_ES">Instal·lació del nextcloud</name>
+<summary>=nextcloud installation wizard, a suite of client-server software for creating and using file hosting services</summary>
+<summary xml:lang="es">Asistente de instalación del nextcloud, una serie de programas cliente-servidor con el objetivo de crear servicio de alojamiento de archivos</summary>
+<summary xml:lang="ca_ES">=Auxiliar d'instal·lació del nextcloud, és una sèrie de programaris client-servidor amb l'objectiu de crear servei d'allotjament de fitxers</summary>
 <description>
-<p>=Stellarium installation wizard, an desktop planetarium</p>
-<p xml:lang="es">Asistente de instalación del Stellarium, un planetario de escritorio</p>
-<p xml:lang="qcv">=Auxiliar d'instal·lació del Stellarium,un planetari d'escriptori</p>
-<p xml:lang="ca_ES">=Auxiliar d'instal·lació del Stellarium,un planetari d'escriptori</p>
+<p>Nextcloud is free and open-source, which means that anyone is allowed to install and operate it on their own private server devices.With the integrated OnlyOffice, Nextcloud application functionally is similar to Dropbox, Office 365 or Google Drive, but can be used on home-local computers or for off-premises file storage hosting. The original ownCloud developer Frank Karlitschek forked ownCloud and created Nextcloud, which continues to be actively developed by Karlitschek and other members of the original ownCloud team</p>
+<p xml:lang="es">Su funcionalidad es similar al software Dropbox, aunque Nextcloud es de tipo código abierto, permitiendo a quien lo desee instalarlo en un servidor privado. Su arquitectura abierta permite añadir funcionalidad al servidor en forma de aplicaciones. Nextcloud es un proyecto paralelo de ownCloud que también es un software de servicio de alojamiento en la nube</p>
+<p xml:lang="ca_ES">La seva funcionalitat és similar al programari Dropbox, encara que Nextcloud és de tipus codi obert, permetent a qui ho desitgi d'instal·lar-lo en un servidor privat. La seva arquitectura oberta permet d'afegir funcionalitats addicionals al servidor en forma d'aplicacions. Nextcloud és un projecte paral·lel d'ownCloud, que també én un programari de servei d'allotjament al núvol</p>
 </description>
 <categories>
 <category>Lliurex</category>
 <category>Zomando</category>
 <category>Utility</category>
 </categories>
-<icon type="cached">stellarium</icon>
+<icon type="cached">nextcloud</icon>
 
 <keywords>
 <keyword>zero</keyword>
 <keyword>lliurex</keyword>
-<keyword>stellarium</keyword>
-<keyword>lliurex-zero-installer-stellarium</keyword>
+<keyword>nextcloud</keyword>
+<keyword>lliurex-zero-installer-nextcloud</keyword>
 <keyword>Zomando</keyword>
 </keywords>
 <keywords xml:lang="es">
 <keyword>Instalación</keyword>
-<keyword>Stellarium</keyword>
-<keyword>Zomando</keyword>
-</keywords>
-<keywords xml:lang="qcv">
-<keyword>Instal·lació</keyword>
-<keyword>del</keyword>
+<keyword>nextcloud</keyword>
 <keyword>Zomando</keyword>
 </keywords>
 <keywords xml:lang="ca_ES">
 <keyword>Zomando</keyword>
-
 </keywords>
 <screenshots>
 <screenshot type="default">
